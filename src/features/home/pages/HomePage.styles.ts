@@ -48,7 +48,7 @@ export const HeroCopy = styled.div`
   position: relative;
   z-index: 1;
   h1 {
-    color: var(--color-brand);
+    color: var(--color-ink);
     font-size: var(--text-display);
     font-weight: 500;
     letter-spacing: -0.04em;
