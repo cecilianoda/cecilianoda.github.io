@@ -6,6 +6,11 @@ const whatsappMessage =
 export const whatsappHref = `https://api.whatsapp.com/send?phone=5562981458024&text=${encodeURIComponent(whatsappMessage)}`
 
 export const siteContent: SiteContent = {
+  identity: {
+    name: 'Cecília Noda',
+    profession: 'Psicóloga clínica',
+    registration: 'CRP 09/22516',
+  },
   navigation: [
     { label: 'Sobre mim', href: '#sobre' },
     { label: 'Psicanálise', href: '#psicanalise' },
@@ -13,8 +18,6 @@ export const siteContent: SiteContent = {
     { label: 'Dúvidas', href: '#faq' },
   ],
   hero: {
-    eyebrow: 'Psicóloga clínica · CRP 09/22516',
-    title: 'Um espaço para compreender quem você é e construir novos sentidos.',
     titleLines: ['Um espaço para', 'compreender', 'quem você é e', 'construir novos', 'sentidos.'],
     support:
       'Atendimento psicológico online para adolescentes, jovens adultos e adultos, com a escuta acolhedora de quem acredita no seu processo.',

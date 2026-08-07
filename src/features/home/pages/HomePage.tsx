@@ -1,5 +1,7 @@
 import portrait from '../../../assets/images/cecilia-retrato.webp'
+import portraitSmall from '../../../assets/images/cecilia-retrato-960.webp'
 import seatedPortrait from '../../../assets/images/cecilia-sentada.webp'
+import seatedPortraitSmall from '../../../assets/images/cecilia-sentada-800.webp'
 import { Footer } from '../../../components/layout/Footer'
 import { Header } from '../../../components/layout/Header'
 import { LinkButton } from '../../../components/ui/LinkButton'
@@ -48,17 +50,21 @@ import {
 } from './HomePage.styles'
 
 export function HomePage() {
-  const { hero, about, approach, process, faq, finalCta, navigation, contacts } = siteContent
+  const { identity, hero, about, approach, process, faq, finalCta, navigation, contacts } =
+    siteContent
+  const heroTitle = hero.titleLines.join(' ')
 
   return (
     <>
-      <Header navigation={navigation} ctaHref={whatsappHref} />
+      <Header brandName={identity.name} navigation={navigation} ctaHref={whatsappHref} />
       <main id="conteudo">
         <Hero id="inicio" aria-labelledby="hero-title">
           <HeroGrid>
             <HeroCopy>
-              <Eyebrow>{hero.eyebrow}</Eyebrow>
-              <h1 id="hero-title" aria-label={hero.title}>
+              <Eyebrow>
+                {identity.profession} · {identity.registration}
+              </Eyebrow>
+              <h1 id="hero-title" aria-label={heroTitle}>
                 {hero.titleLines.map((line) => (
                   <span key={line} aria-hidden="true">
                     {line}
@@ -79,6 +85,8 @@ export function HomePage() {
               <HeroArch aria-hidden="true" />
               <img
                 src={portrait}
+                srcSet={`${portraitSmall} 960w, ${portrait} 1600w`}
+                sizes="(min-width: 48rem) min(31rem, 44vw), calc(100vw - 2.5rem)"
                 alt="Retrato de Cecília Noda, psicóloga clínica"
                 width="1600"
                 height="1986"
@@ -108,6 +116,8 @@ export function HomePage() {
                 <AboutPhotoMedia>
                   <img
                     src={seatedPortrait}
+                    srcSet={`${seatedPortraitSmall} 800w, ${seatedPortrait} 1600w`}
+                    sizes="(min-width: 64rem) 32rem, (min-width: 48rem) 40vw, calc(100vw - 2.5rem)"
                     alt="Cecília Noda sorrindo em um retrato informal"
                     width="1600"
                     height="1600"
@@ -192,7 +202,7 @@ export function HomePage() {
           </FinalCtaInner>
         </FinalCta>
       </main>
-      <Footer contacts={contacts} />
+      <Footer contacts={contacts} identity={identity} />
       <MobileWhatsapp
         href={whatsappHref}
         target="_blank"

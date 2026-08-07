@@ -9,6 +9,12 @@ export interface ContactChannel {
   href: string
 }
 
+export interface SiteIdentity {
+  name: string
+  profession: string
+  registration: string
+}
+
 export interface NumberedContent {
   number: string
   title: string
@@ -21,8 +27,9 @@ export interface FaqItem {
 }
 
 export interface SiteContent {
+  identity: SiteIdentity
   navigation: NavigationItem[]
-  hero: { eyebrow: string; title: string; titleLines: string[]; support: string }
+  hero: { titleLines: string[]; support: string }
   about: {
     eyebrow: string
     title: string

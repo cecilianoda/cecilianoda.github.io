@@ -1,21 +1,24 @@
 import monogram from '../../assets/logos/monograma-principal.svg'
-import type { ContactChannel } from '../../core/types/content'
+import type { ContactChannel, SiteIdentity } from '../../core/types/content'
 import { ArrowIcon } from '../ui/ArrowIcon'
-import { Brand, FooterBottom, FooterGrid, FooterRoot } from './Footer.styles'
+import { Brand, FooterBottom, FooterGrid, FooterRoot, Monogram } from './Footer.styles'
 
 interface FooterProps {
   contacts: ContactChannel[]
+  identity: SiteIdentity
 }
 
-export function Footer({ contacts }: FooterProps) {
+export function Footer({ contacts, identity }: FooterProps) {
   return (
     <FooterRoot>
       <FooterGrid>
         <Brand>
-          <img src={monogram} alt="" width="72" height="78" />
+          <Monogram $src={monogram} aria-hidden="true" />
           <div>
-            <strong>Cecília Noda</strong>
-            <span>Psicóloga clínica · CRP 09/22516</span>
+            <strong>{identity.name}</strong>
+            <span>
+              {identity.profession} · {identity.registration}
+            </span>
           </div>
         </Brand>
         <address>
@@ -33,7 +36,9 @@ export function Footer({ contacts }: FooterProps) {
         </address>
       </FooterGrid>
       <FooterBottom>
-        <span>© {new Date().getFullYear()} Cecília Noda</span>
+        <span>
+          © {new Date().getFullYear()} {identity.name}
+        </span>
         <a href="#inicio">
           Voltar ao início <ArrowIcon direction="up" />
         </a>

@@ -43,17 +43,11 @@ export const Brand = styled.div`
   gap: 1.25rem;
   justify-content: center;
 
-  img {
-    filter: brightness(0) invert(1);
-    height: 4.5rem;
-    object-fit: contain;
-    width: 4rem;
-  }
   strong {
     display: block;
     font: 500 var(--text-xl) / 1.2 var(--font-display);
   }
-  span {
+  > div > span {
     display: block;
     font-size: var(--text-xs);
     margin-top: 0.4rem;
@@ -63,6 +57,15 @@ export const Brand = styled.div`
   @media (min-width: 48rem) {
     justify-content: flex-start;
   }
+`
+
+export const Monogram = styled.span<{ $src: string }>`
+  background-color: currentColor;
+  display: block;
+  flex: 0 0 auto;
+  height: 4.5rem;
+  mask: url(${({ $src }) => $src}) center / contain no-repeat;
+  width: 4rem;
 `
 export const FooterBottom = styled(Container)`
   border-top: 1px solid rgb(232 220 198 / 20%);
