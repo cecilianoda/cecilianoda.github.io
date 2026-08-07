@@ -22,7 +22,7 @@ npm run dev
 ## Organização
 
 - `src/features/home/content/siteContent.ts`: textos, navegação, FAQ e contatos tipados.
-- `src/features/home/pages`: composição da landing page.
+- `src/features/home/pages`: composição da landing page e estilos divididos por grupos de seções.
 - `src/components`: elementos reutilizáveis de layout e interface, com estilos em arquivos `*.styles.ts`.
 - `src/styles/theme.ts`: tokens centrais de cor, largura e movimento.
 - `src/styles/global.styles.ts`: fontes, reset e estilos globais via `styled-components`.
@@ -34,4 +34,4 @@ Open Sauce One e Playfair Display são carregadas localmente com `font-display: 
 
 ## Personalização
 
-Atualize conteúdo e contatos em `siteContent.ts`. Quando houver um domínio definitivo, inclua a URL canônica e `og:url` em `index.html`.
+Atualize conteúdo e contatos em `siteContent.ts`. A URL canônica e os metadados sociais usam o endereço atual do GitHub Pages; atualize-os em `index.html` caso o site passe a usar um domínio próprio.
