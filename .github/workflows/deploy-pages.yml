@@ -1,0 +1,66 @@
+name: Build and publish GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+concurrency:
+  group: github-pages-build
+  cancel-in-progress: true
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+        with:
+          path: source
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: source/package-lock.json
+
+      - name: Install dependencies
+        working-directory: source
+        run: npm ci
+
+      - name: Build production site
+        working-directory: source
+        run: npm run build
+
+      - name: Check out deployment branch
+        uses: actions/checkout@v6
+        with:
+          ref: gh-pages
+          path: deployment
+
+      - name: Replace deployment files
+        run: |
+          rsync --archive --delete --exclude='.git/' source/dist/ deployment/
+          touch deployment/.nojekyll
+
+      - name: Publish build to gh-pages
+        working-directory: deployment
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+
+          if git diff --cached --quiet; then
+            echo "Build output is unchanged."
+            exit 0
+          fi
+
+          git commit -m "deploy: ${SOURCE_SHA}"
+          git push origin HEAD:gh-pages
