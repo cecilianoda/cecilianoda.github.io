@@ -13,6 +13,7 @@ Todas as alterações relevantes deste projeto serão documentadas neste arquivo
 
 ### Alterado
 
+- Otimizada a imagem de compartilhamento para recortes do WhatsApp em diferentes dispositivos.
 - Centralizados os dados institucionais da profissional.
 - Separados os estilos da página inicial em módulos menores.
 - Simplificada a inicialização com a remoção do `ThemeProvider` não utilizado.
