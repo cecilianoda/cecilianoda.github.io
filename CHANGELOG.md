@@ -2,6 +2,21 @@
 
 Todas as alterações relevantes deste projeto serão documentadas neste arquivo.
 
+## [1.2.1] - 2026-08-10
+
+### Adicionado
+
+- Diretrizes do repositório para padronizar o trabalho de agentes, incluindo mensagens de commit e catalogação de versões.
+
+### Alterado
+
+- Separado o conteúdo da página inicial em módulos dedicados para identidade, navegação, apresentação, abordagem, atendimento, dúvidas, chamada final e contatos.
+- Atualizados os textos de apresentação profissional, abordagem psicanalítica e chamada final conforme a nova versão editorial.
+
+### Corrigido
+
+- Corrigida a grafia da marca WhatsApp no texto sobre os atendimentos online.
+
 ## [1.2.0] - 2026-08-07
 
 ### Adicionado
