@@ -22,7 +22,7 @@ export const faqContent: SiteContent['faq'] = {
     {
       question: 'Como acontecem os atendimentos?',
       answer:
-        'As sessões são realizadas de forma online, por videochamada via Google Meet ou Whatsapp: plataformas gratuitas que funcionam em qualquer celular, tablet ou computador com câmera e microfone. Você receberá o link com antecedência e só precisa estar em um ambiente reservado, seguro e sigiloso, onde você se sinta confortável para conversar.',
+        'As sessões são realizadas de forma online, por videochamada via Google Meet ou WhatsApp: plataformas gratuitas que funcionam em qualquer celular, tablet ou computador com câmera e microfone. Você receberá o link com antecedência e só precisa estar em um ambiente reservado, seguro e sigiloso, onde você se sinta confortável para conversar.',
     },
     {
       question: 'Quanto tempo dura cada sessão?',
