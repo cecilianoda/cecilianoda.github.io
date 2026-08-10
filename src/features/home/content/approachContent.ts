@@ -16,7 +16,7 @@ export const approachContent: SiteContent['approach'] = {
       number: '02',
       title: 'Compreender além dos sintomas',
       description:
-        'Ansiedade, insegurança, conflitos nos relacionamentos ou sentimentos difíceis costumam ter um passado. A modernidade nos exige uma cura instantânea para que possamos continuar produtivos, mas o trabalho terapêutico busca compreender o que está por trás desses sintomas, permitindo um contato mais profundo consigo mesmo.',
+        'Ansiedade, insegurança, conflitos nos relacionamentos ou sentimentos difíceis costumam ter um passado. A modernidade nos exige uma cura instantânea para que possamos continuar produtivos, mas o trabalho terapêutico busca compreender o que está por trás desses sintomas, permitindo um contato mais profundo com nós mesmos.',
     },
     {
       number: '03',
