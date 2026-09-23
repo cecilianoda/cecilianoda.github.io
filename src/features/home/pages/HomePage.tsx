@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import portrait from '../../../assets/images/cecilia-retrato.webp'
 import portraitSmall from '../../../assets/images/cecilia-retrato-960.webp'
 import seatedPortrait from '../../../assets/images/cecilia-sentada.webp'
@@ -61,7 +61,13 @@ export function HomePage() {
   const mainRef = useRef<HTMLElement>(null)
   const footerRef = useRef<HTMLElement>(null)
   const [isFooterVisible, setIsFooterVisible] = useState(false)
-  useEditorialMotion(mainRef)
+
+  const initialPathname =
+    typeof window !== 'undefined' ? window.location.pathname.replace(/\/$/, '') || '/' : '/'
+
+  const skipHero = initialPathname !== '/'
+
+  useEditorialMotion(mainRef, { skipHero })
 
   useEffect(() => {
     const footer = footerRef.current
@@ -71,46 +77,59 @@ export function HomePage() {
       ([entry]) => setIsFooterVisible(entry.isIntersecting),
       { threshold: 0.08 },
     )
+
     observer.observe(footer)
+
     return () => observer.disconnect()
   }, [])
-  const { identity, hero, about, approach, process, faq, finalCta, navigation, contacts } =
-    siteContent
-  const heroTitle = hero.titleLines.join(' ')
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const legacyPath = getSectionPathFromHash(window.location.hash)
+
     if (legacyPath) {
       window.history.replaceState(null, '', legacyPath)
     }
 
-    const scrollToCurrentSection = () => {
-      const pathname = window.location.pathname.replace(/\/$/, '') || '/'
-      if (pathname !== window.location.pathname) {
-        window.history.replaceState(null, '', pathname)
-      }
-      scrollToSection(pathname, 'auto')
+    const pathname = window.location.pathname.replace(/\/$/, '') || '/'
+
+    if (pathname !== window.location.pathname) {
+      window.history.replaceState(null, '', pathname)
     }
-    const animationFrame = window.requestAnimationFrame(scrollToCurrentSection)
-    window.addEventListener('popstate', scrollToCurrentSection)
+
+    scrollToSection(pathname, 'auto')
+
+    const handlePopState = () => {
+      const currentPathname = window.location.pathname.replace(/\/$/, '') || '/'
+
+      scrollToSection(currentPathname, 'auto')
+    }
+
+    window.addEventListener('popstate', handlePopState)
 
     return () => {
-      window.cancelAnimationFrame(animationFrame)
-      window.removeEventListener('popstate', scrollToCurrentSection)
+      window.removeEventListener('popstate', handlePopState)
     }
   }, [])
+
+  const { identity, hero, about, approach, process, faq, finalCta, navigation, contacts } =
+    siteContent
+
+  const heroTitle = hero.titleLines.join(' ')
 
   return (
     <>
       <Header brandName={identity.name} navigation={navigation} ctaHref={whatsappHref} />
+
       <main id="conteudo" ref={mainRef}>
         <Hero id="inicio" aria-labelledby="hero-title">
           <OrganicBackdrop aria-hidden="true" data-hero-decoration />
+
           <HeroGrid>
             <HeroCopy>
               <Eyebrow data-hero-brand>
                 {identity.profession} · {identity.registration}
               </Eyebrow>
+
               <h1 id="hero-title" aria-label={heroTitle}>
                 {hero.titleLines.map((line, index) => (
                   <span key={line} data-hero-line aria-hidden="true">
@@ -118,18 +137,23 @@ export function HomePage() {
                   </span>
                 ))}
               </h1>
+
               <HeroSupport data-hero-support>{hero.support}</HeroSupport>
+
               <HeroActions data-hero-actions>
                 <LinkButton href={whatsappHref} target="_blank" rel="noreferrer">
                   Agendar uma conversa
                 </LinkButton>
+
                 <InlineLink href="/sobre" onClick={(event) => navigateToSection(event, '/sobre')}>
                   Conheça meu trabalho <ArrowIcon direction="down" />
                 </InlineLink>
               </HeroActions>
             </HeroCopy>
+
             <HeroVisual data-hero-image>
               <HeroArch aria-hidden="true" />
+
               <img
                 src={portrait}
                 srcSet={`${portraitSmall} 960w, ${portrait} 1600w`}
@@ -139,11 +163,14 @@ export function HomePage() {
                 height="1986"
                 fetchPriority="high"
               />
+
               <OnlineBadge>
-                <i aria-hidden="true" /> Atendimento 100% online
+                <i aria-hidden="true" />
+                Atendimento 100% online
               </OnlineBadge>
             </HeroVisual>
           </HeroGrid>
+
           <HeroRail aria-hidden="true">
             <span>Escuta</span>
             <span>Singularidade</span>
@@ -154,10 +181,12 @@ export function HomePage() {
         <AboutSection id="sobre" aria-labelledby="about-title">
           <AboutGrid>
             <AboutEyebrow data-scroll-reveal>{about.eyebrow}</AboutEyebrow>
+
             <AboutIntro data-scroll-reveal>
               <h2 id="about-title">{about.title}</h2>
               <p>{about.introduction}</p>
             </AboutIntro>
+
             <AboutVisual>
               <AboutPhotoFrame>
                 <AboutPhotoMedia data-image-reveal>
@@ -174,10 +203,12 @@ export function HomePage() {
                 </AboutPhotoMedia>
               </AboutPhotoFrame>
             </AboutVisual>
+
             <AboutDetails data-scroll-reveal>
               {about.details.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
+
               <Facts aria-label="Informações profissionais">
                 {about.facts.map((fact) => (
                   <li key={fact}>{fact}</li>
@@ -194,8 +225,10 @@ export function HomePage() {
                 <Eyebrow $light>{approach.eyebrow}</Eyebrow>
                 <h2 id="approach-title">{approach.title}</h2>
               </div>
+
               <p>{approach.introduction}</p>
             </SectionIntro>
+
             <FoundationGrid>
               {approach.foundations.map((foundation) => (
                 <FoundationCard key={foundation.number} data-scroll-reveal>
@@ -214,6 +247,7 @@ export function HomePage() {
               <Eyebrow>{process.eyebrow}</Eyebrow>
               <h2 id="process-title">{process.title}</h2>
             </ProcessHeading>
+
             <Steps>
               {process.steps.map((step) => (
                 <li key={step.number} data-scroll-reveal>
@@ -232,6 +266,7 @@ export function HomePage() {
               <Eyebrow>{faq.eyebrow}</Eyebrow>
               <h2 id="faq-title">{faq.title}</h2>
             </FaqHeading>
+
             <FaqContent>
               <Faq items={faq.items} />
             </FaqContent>
@@ -244,13 +279,16 @@ export function HomePage() {
             <h2 id="cta-title">{finalCta.title}</h2>
             <CtaSubtitle>{finalCta.subtitle}</CtaSubtitle>
             <CtaBody>{finalCta.body}</CtaBody>
+
             <LinkButton variant="light" href={whatsappHref} target="_blank" rel="noreferrer">
               Conversar pelo WhatsApp
             </LinkButton>
           </FinalCtaInner>
         </FinalCta>
       </main>
+
       <Footer contacts={contacts} identity={identity} footerRef={footerRef} />
+
       <MobileWhatsapp
         href={whatsappHref}
         target="_blank"
