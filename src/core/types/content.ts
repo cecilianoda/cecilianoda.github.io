@@ -1,6 +1,8 @@
+import type { SectionPath } from '../sectionNavigation'
+
 export interface NavigationItem {
   label: string
-  href: `#${string}`
+  href: SectionPath
 }
 
 export interface ContactChannel {

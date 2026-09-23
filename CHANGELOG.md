@@ -2,6 +2,18 @@
 
 Todas as alterações relevantes deste projeto serão documentadas neste arquivo.
 
+## [1.2.2] - 2026-09-22
+
+### Alterado
+
+- Substituídos os links internos com hash por rotas limpas para as seções Sobre, Psicanálise, Atendimento e Dúvidas; o início passou a usar a URL base do site.
+- Atualizados os metadados canônicos e de compartilhamento para o domínio público `cecilianodapsicologa.com.br`.
+
+### Corrigido
+
+- Adicionado fallback de rotas para que links diretos às seções carreguem o site e exibam a seção correspondente no GitHub Pages.
+- Mantida a compatibilidade com links antigos contendo hash, redirecionando-os para as novas URLs limpas.
+
 ## [1.2.1] - 2026-08-10
 
 ### Adicionado

@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { siteContent, whatsappHref } from '../content/siteContent'
 import { HomePage } from './HomePage'
 
@@ -49,6 +49,19 @@ describe('HomePage', () => {
     await user.click(button)
     await user.keyboard('{Escape}')
     expect(button).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('uses clean section paths and scrolls to the requested section', async () => {
+    const user = userEvent.setup()
+    const scrollIntoView = vi.fn()
+    window.history.replaceState(null, '', '/')
+    Element.prototype.scrollIntoView = scrollIntoView
+    render(<HomePage />)
+
+    await user.click(screen.getByRole('link', { name: 'Conheça meu trabalho' }))
+
+    expect(window.location.pathname).toBe('/sobre')
+    expect(scrollIntoView).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' })
   })
 
   it('renders FAQ from local data and controls accessible panels', async () => {
