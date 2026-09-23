@@ -12,6 +12,7 @@ Todas as alterações relevantes deste projeto serão documentadas neste arquivo
 
 ### Alterado
 
+- Substituído favicon.svg por favicon.png para melhor compatibilidade.
 - Substituídos os links internos com hash por rotas limpas para as seções Sobre, Psicanálise, Atendimento e Dúvidas; o início passou a usar a URL base do site.
 - Atualizados os metadados canônicos e de compartilhamento para o domínio público `cecilianodapsicologa.com.br`.
 
