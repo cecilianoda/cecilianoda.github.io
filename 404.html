@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      ;(function () {
+        var destination = window.location.pathname + window.location.search + window.location.hash
+        window.location.replace('/?__route=' + encodeURIComponent(destination))
+      })()
+    </script>
+  </head>
+  <body></body>
+</html>
