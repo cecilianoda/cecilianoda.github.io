@@ -2,6 +2,12 @@
 
 Todas as alterações relevantes deste projeto serão documentadas neste arquivo.
 
+## [1.2.3] - 2026-09-22
+
+### Corrigido
+
+- Restaurado o arquivo `CNAME` na publicação do GitHub Pages para manter o domínio `cecilianodapsicologa.com.br` associado ao site após os deploys.
+
 ## [1.2.2] - 2026-09-22
 
 ### Alterado
