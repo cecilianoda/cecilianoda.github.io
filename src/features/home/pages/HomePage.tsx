@@ -4,6 +4,11 @@ import portraitSmall from '../../../assets/images/cecilia-retrato-960.webp'
 import seatedPortrait from '../../../assets/images/cecilia-sentada.webp'
 import seatedPortraitSmall from '../../../assets/images/cecilia-sentada-800.webp'
 import { Footer } from '../../../components/layout/Footer'
+import {
+  getSectionPathFromHash,
+  navigateToSection,
+  scrollToSection,
+} from '../../../core/sectionNavigation'
 import { Header } from '../../../components/layout/Header'
 import { LinkButton } from '../../../components/ui/LinkButton'
 import { ArrowIcon } from '../../../components/ui/ArrowIcon'
@@ -73,6 +78,28 @@ export function HomePage() {
     siteContent
   const heroTitle = hero.titleLines.join(' ')
 
+  useEffect(() => {
+    const legacyPath = getSectionPathFromHash(window.location.hash)
+    if (legacyPath) {
+      window.history.replaceState(null, '', legacyPath)
+    }
+
+    const scrollToCurrentSection = () => {
+      const pathname = window.location.pathname.replace(/\/$/, '') || '/'
+      if (pathname !== window.location.pathname) {
+        window.history.replaceState(null, '', pathname)
+      }
+      scrollToSection(pathname, 'auto')
+    }
+    const animationFrame = window.requestAnimationFrame(scrollToCurrentSection)
+    window.addEventListener('popstate', scrollToCurrentSection)
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame)
+      window.removeEventListener('popstate', scrollToCurrentSection)
+    }
+  }, [])
+
   return (
     <>
       <Header brandName={identity.name} navigation={navigation} ctaHref={whatsappHref} />
@@ -96,7 +123,7 @@ export function HomePage() {
                 <LinkButton href={whatsappHref} target="_blank" rel="noreferrer">
                   Agendar uma conversa
                 </LinkButton>
-                <InlineLink href="#sobre">
+                <InlineLink href="/sobre" onClick={(event) => navigateToSection(event, '/sobre')}>
                   Conheça meu trabalho <ArrowIcon direction="down" />
                 </InlineLink>
               </HeroActions>

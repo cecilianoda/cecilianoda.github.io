@@ -1,5 +1,6 @@
 import monogram from '../../assets/logos/monograma-principal.svg'
 import type { Ref } from 'react'
+import { navigateToSection } from '../../core/sectionNavigation'
 import type { ContactChannel, SiteIdentity } from '../../core/types/content'
 import { ArrowIcon } from '../ui/ArrowIcon'
 import { Brand, FooterBottom, FooterGrid, FooterRoot, Monogram } from './Footer.styles'
@@ -41,7 +42,7 @@ export function Footer({ contacts, identity, footerRef }: FooterProps) {
         <span>
           © {new Date().getFullYear()} {identity.name}
         </span>
-        <a href="#inicio">
+        <a href="/" onClick={(event) => navigateToSection(event, '/')}>
           Voltar ao início <ArrowIcon direction="up" />
         </a>
       </FooterBottom>

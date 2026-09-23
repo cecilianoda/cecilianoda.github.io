@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import logo from '../../assets/logos/assinatura-horizontal.svg'
+import { navigateToSection } from '../../core/sectionNavigation'
 import type { NavigationItem } from '../../core/types/content'
 import {
   HeaderCta,
@@ -58,7 +59,14 @@ export function Header({ brandName, navigation, ctaHref }: HeaderProps) {
   return (
     <HeaderRoot>
       <HeaderInner>
-        <LogoLink href="#inicio" aria-label={`${brandName} — início`} onClick={closeMenu}>
+        <LogoLink
+          href="/"
+          aria-label={`${brandName} — início`}
+          onClick={(event) => {
+            navigateToSection(event, '/')
+            closeMenu()
+          }}
+        >
           <img src={logo} alt="" width="178" height="46" />
         </LogoLink>
         <MenuButton
@@ -86,7 +94,13 @@ export function Header({ brandName, navigation, ctaHref }: HeaderProps) {
           <ul>
             {navigation.map((item) => (
               <li key={item.href}>
-                <a href={item.href} onClick={closeMenu}>
+                <a
+                  href={item.href}
+                  onClick={(event) => {
+                    navigateToSection(event, item.href)
+                    closeMenu()
+                  }}
+                >
                   {item.label}
                 </a>
               </li>
