@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import portrait from '../../../assets/images/cecilia-retrato.webp'
 import portraitSmall from '../../../assets/images/cecilia-retrato-960.webp'
 import seatedPortrait from '../../../assets/images/cecilia-sentada.webp'
@@ -8,6 +9,7 @@ import { LinkButton } from '../../../components/ui/LinkButton'
 import { ArrowIcon } from '../../../components/ui/ArrowIcon'
 import { Container, Eyebrow } from '../../../styles/shared.styles'
 import { Faq } from '../components/Faq'
+import { useEditorialMotion } from '../hooks/useEditorialMotion'
 import { siteContent, whatsappHref } from '../content/siteContent'
 import {
   AboutDetails,
@@ -41,6 +43,7 @@ import {
   InlineLink,
   MobileWhatsapp,
   OnlineBadge,
+  OrganicBackdrop,
   ProcessGrid,
   ProcessHeading,
   ProcessSection,
@@ -50,6 +53,22 @@ import {
 } from './HomePage.styles'
 
 export function HomePage() {
+  const mainRef = useRef<HTMLElement>(null)
+  const footerRef = useRef<HTMLElement>(null)
+  const [isFooterVisible, setIsFooterVisible] = useState(false)
+  useEditorialMotion(mainRef)
+
+  useEffect(() => {
+    const footer = footerRef.current
+    if (!footer || !window.IntersectionObserver) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsFooterVisible(entry.isIntersecting),
+      { threshold: 0.08 },
+    )
+    observer.observe(footer)
+    return () => observer.disconnect()
+  }, [])
   const { identity, hero, about, approach, process, faq, finalCta, navigation, contacts } =
     siteContent
   const heroTitle = hero.titleLines.join(' ')
@@ -57,22 +76,23 @@ export function HomePage() {
   return (
     <>
       <Header brandName={identity.name} navigation={navigation} ctaHref={whatsappHref} />
-      <main id="conteudo">
+      <main id="conteudo" ref={mainRef}>
         <Hero id="inicio" aria-labelledby="hero-title">
+          <OrganicBackdrop aria-hidden="true" data-hero-decoration />
           <HeroGrid>
             <HeroCopy>
-              <Eyebrow>
+              <Eyebrow data-hero-brand>
                 {identity.profession} · {identity.registration}
               </Eyebrow>
               <h1 id="hero-title" aria-label={heroTitle}>
-                {hero.titleLines.map((line) => (
-                  <span key={line} aria-hidden="true">
-                    {line}
+                {hero.titleLines.map((line, index) => (
+                  <span key={line} data-hero-line aria-hidden="true">
+                    {index === 1 ? <em data-dynamic-word>{line}</em> : line}
                   </span>
                 ))}
               </h1>
-              <HeroSupport>{hero.support}</HeroSupport>
-              <HeroActions>
+              <HeroSupport data-hero-support>{hero.support}</HeroSupport>
+              <HeroActions data-hero-actions>
                 <LinkButton href={whatsappHref} target="_blank" rel="noreferrer">
                   Agendar uma conversa
                 </LinkButton>
@@ -81,7 +101,7 @@ export function HomePage() {
                 </InlineLink>
               </HeroActions>
             </HeroCopy>
-            <HeroVisual>
+            <HeroVisual data-hero-image>
               <HeroArch aria-hidden="true" />
               <img
                 src={portrait}
@@ -106,14 +126,14 @@ export function HomePage() {
 
         <AboutSection id="sobre" aria-labelledby="about-title">
           <AboutGrid>
-            <AboutEyebrow>{about.eyebrow}</AboutEyebrow>
-            <AboutIntro>
+            <AboutEyebrow data-scroll-reveal>{about.eyebrow}</AboutEyebrow>
+            <AboutIntro data-scroll-reveal>
               <h2 id="about-title">{about.title}</h2>
               <p>{about.introduction}</p>
             </AboutIntro>
             <AboutVisual>
               <AboutPhotoFrame>
-                <AboutPhotoMedia>
+                <AboutPhotoMedia data-image-reveal>
                   <img
                     src={seatedPortrait}
                     srcSet={`${seatedPortraitSmall} 800w, ${seatedPortrait} 1600w`}
@@ -122,11 +142,12 @@ export function HomePage() {
                     width="1600"
                     height="1600"
                     loading="lazy"
+                    data-about-image
                   />
                 </AboutPhotoMedia>
               </AboutPhotoFrame>
             </AboutVisual>
-            <AboutDetails>
+            <AboutDetails data-scroll-reveal>
               {about.details.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -141,7 +162,7 @@ export function HomePage() {
 
         <ApproachSection id="psicanalise" aria-labelledby="approach-title">
           <Container>
-            <SectionIntro>
+            <SectionIntro data-scroll-reveal>
               <div>
                 <Eyebrow $light>{approach.eyebrow}</Eyebrow>
                 <h2 id="approach-title">{approach.title}</h2>
@@ -150,7 +171,7 @@ export function HomePage() {
             </SectionIntro>
             <FoundationGrid>
               {approach.foundations.map((foundation) => (
-                <FoundationCard key={foundation.number}>
+                <FoundationCard key={foundation.number} data-scroll-reveal>
                   <span>{foundation.number}</span>
                   <h3>{foundation.title}</h3>
                   <p>{foundation.description}</p>
@@ -162,13 +183,13 @@ export function HomePage() {
 
         <ProcessSection id="atendimento" aria-labelledby="process-title">
           <ProcessGrid>
-            <ProcessHeading>
+            <ProcessHeading data-scroll-reveal>
               <Eyebrow>{process.eyebrow}</Eyebrow>
               <h2 id="process-title">{process.title}</h2>
             </ProcessHeading>
             <Steps>
               {process.steps.map((step) => (
-                <li key={step.number}>
+                <li key={step.number} data-scroll-reveal>
                   <StepNumber>{step.number.padStart(2, '0')}</StepNumber>
                   <h3>{step.title}</h3>
                   <p>{step.description}</p>
@@ -180,7 +201,7 @@ export function HomePage() {
 
         <FaqSection id="faq" aria-labelledby="faq-title">
           <FaqGrid>
-            <FaqHeading>
+            <FaqHeading data-scroll-reveal>
               <Eyebrow>{faq.eyebrow}</Eyebrow>
               <h2 id="faq-title">{faq.title}</h2>
             </FaqHeading>
@@ -191,7 +212,7 @@ export function HomePage() {
         </FaqSection>
 
         <FinalCta aria-labelledby="cta-title">
-          <FinalCtaInner>
+          <FinalCtaInner data-scroll-reveal>
             <Eyebrow $light>Um primeiro passo</Eyebrow>
             <h2 id="cta-title">{finalCta.title}</h2>
             <CtaSubtitle>{finalCta.subtitle}</CtaSubtitle>
@@ -202,12 +223,13 @@ export function HomePage() {
           </FinalCtaInner>
         </FinalCta>
       </main>
-      <Footer contacts={contacts} identity={identity} />
+      <Footer contacts={contacts} identity={identity} footerRef={footerRef} />
       <MobileWhatsapp
         href={whatsappHref}
         target="_blank"
         rel="noreferrer"
         aria-label="Conversar com Cecília pelo WhatsApp"
+        $isFooterVisible={isFooterVisible}
       >
         <ArrowIcon /> WhatsApp
       </MobileWhatsapp>

@@ -25,7 +25,7 @@ export const LogoLink = styled.a`
     width: 100%;
   }
   @media (min-width: 64rem) {
-    width: 13rem;
+    width: 16rem;
   }
 `
 export const MenuButton = styled.button`

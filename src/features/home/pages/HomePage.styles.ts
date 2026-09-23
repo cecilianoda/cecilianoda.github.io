@@ -4,6 +4,8 @@ import { Container, Eyebrow, Section } from '../../../styles/shared.styles'
 export * from './HomePage.secondary.styles'
 
 export const Hero = styled.section`
+  background: var(--color-surface);
+  isolation: isolate;
   min-height: 100svh;
   overflow: hidden;
   padding: calc(var(--header-height) + var(--space-6)) 0 var(--space-5);
@@ -14,9 +16,60 @@ export const Hero = styled.section`
     padding-top: calc(var(--header-height) + var(--space-5));
   }
 `
+export const OrganicBackdrop = styled.div`
+  background:
+    radial-gradient(
+      ellipse 56% 74% at 4% 103%,
+      rgb(114 47 55 / 51%) 0%,
+      rgb(114 47 55 / 24%) 42%,
+      transparent 73%
+    ),
+    radial-gradient(
+      ellipse 53% 62% at 104% 35%,
+      rgb(185 168 154 / 78%) 0%,
+      rgb(185 168 154 / 37%) 43%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 47% 52% at 53% 8%,
+      rgb(255 248 235 / 96%) 0%,
+      rgb(255 248 235 / 42%) 48%,
+      transparent 75%
+    ),
+    radial-gradient(ellipse 44% 46% at 61% 92%, rgb(85 0 0 / 25%) 0%, transparent 74%);
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  filter: blur(28px);
+  transform: scale(1.06);
+  z-index: 0;
+
+  @media (max-width: 47.99rem) {
+    background:
+      radial-gradient(
+        ellipse 112% 38% at -12% 104%,
+        rgb(114 47 55 / 49%) 0%,
+        rgb(114 47 55 / 20%) 46%,
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 97% 41% at 107% 25%,
+        rgb(185 168 154 / 77%) 0%,
+        rgb(185 168 154 / 30%) 46%,
+        transparent 73%
+      ),
+      radial-gradient(ellipse 92% 34% at 25% 8%, rgb(255 248 235 / 94%) 0%, transparent 75%),
+      radial-gradient(ellipse 76% 29% at 84% 77%, rgb(85 0 0 / 23%) 0%, transparent 76%);
+    filter: blur(22px);
+    transform: scale(1.08);
+  }
+`
 export const HeroGrid = styled(Container)`
   display: grid;
   gap: var(--space-6);
+  position: relative;
+  z-index: 1;
   @media (min-width: 48rem) {
     align-items: center;
     grid-template-columns: 1.05fr 0.95fr;
@@ -43,6 +96,11 @@ export const HeroCopy = styled.div`
 
     span {
       display: block;
+    }
+
+    em {
+      display: inline-block;
+      font-style: italic;
     }
   }
 
@@ -156,6 +214,8 @@ export const HeroRail = styled.div`
     min-height: 4.75rem;
     padding-inline: var(--gutter);
     text-transform: uppercase;
+    position: relative;
+    z-index: 1;
     span::before {
       color: var(--color-wine);
       content: '✦';

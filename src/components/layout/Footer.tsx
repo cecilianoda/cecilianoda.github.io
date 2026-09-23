@@ -1,4 +1,5 @@
 import monogram from '../../assets/logos/monograma-principal.svg'
+import type { Ref } from 'react'
 import type { ContactChannel, SiteIdentity } from '../../core/types/content'
 import { ArrowIcon } from '../ui/ArrowIcon'
 import { Brand, FooterBottom, FooterGrid, FooterRoot, Monogram } from './Footer.styles'
@@ -6,11 +7,12 @@ import { Brand, FooterBottom, FooterGrid, FooterRoot, Monogram } from './Footer.
 interface FooterProps {
   contacts: ContactChannel[]
   identity: SiteIdentity
+  footerRef?: Ref<HTMLElement>
 }
 
-export function Footer({ contacts, identity }: FooterProps) {
+export function Footer({ contacts, identity, footerRef }: FooterProps) {
   return (
-    <FooterRoot>
+    <FooterRoot ref={footerRef}>
       <FooterGrid>
         <Brand>
           <Monogram $src={monogram} aria-hidden="true" />

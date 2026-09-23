@@ -34,8 +34,17 @@ export const StyledLink = styled.a<{ $variant: LinkButtonVariant }>`
     background-color var(--motion-fast),
     color var(--motion-fast),
     transform var(--motion-fast);
+
+  svg {
+    transition: transform 280ms ease;
+  }
+
   ${({ $variant }) => variants[$variant]}
   &:hover {
     transform: translateY(-2px);
+
+    svg {
+      transform: translateX(0.35rem);
+    }
   }
 `

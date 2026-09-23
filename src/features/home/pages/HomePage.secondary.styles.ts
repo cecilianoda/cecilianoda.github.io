@@ -115,6 +115,17 @@ export const FoundationCard = styled.article`
     margin: 0;
   }
 
+  @media (hover: hover) and (pointer: fine) {
+    transition:
+      background-color 350ms ease,
+      transform 350ms ease;
+
+    &:hover {
+      background: rgb(232 220 198 / 5%);
+      transform: translateY(-0.2rem);
+    }
+  }
+
   @media (max-width: 47.99rem) {
     > span {
       font-size: 1.55rem;
@@ -202,6 +213,19 @@ export const Steps = styled.ol`
     max-width: 36rem;
   }
 
+  li {
+    transition:
+      border-color 320ms ease,
+      transform 320ms ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    li:hover {
+      border-color: var(--color-wine);
+      transform: translateX(0.25rem);
+    }
+  }
+
   @media (min-width: 48rem) {
     li {
       grid-template-columns: 4rem minmax(0, 1fr);
@@ -249,10 +273,41 @@ export const FaqContent = styled.div`
 `
 
 export const FinalCta = styled.section`
-  background: var(--color-wine);
+  background:
+    radial-gradient(ellipse 52% 88% at -7% 103%, rgb(185 168 154 / 38%) 0%, transparent 71%),
+    radial-gradient(ellipse 49% 80% at 103% -4%, rgb(85 0 0 / 58%) 0%, transparent 73%),
+    radial-gradient(ellipse 37% 55% at 51% 42%, rgb(232 220 198 / 10%) 0%, transparent 76%),
+    linear-gradient(120deg, var(--color-wine), #65262d);
   color: var(--color-paper);
   padding: clamp(2.5rem, 6vw, 5rem) 0;
   text-align: center;
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    background: radial-gradient(circle, rgb(232 220 198 / 13%), transparent 69%);
+    border: 0;
+    border-radius: 50%;
+    content: '';
+    filter: blur(8px);
+    height: min(56vw, 42rem);
+    left: -18rem;
+    position: absolute;
+    top: -22rem;
+    width: min(56vw, 42rem);
+  }
+
+  &::after {
+    background: radial-gradient(circle, rgb(232 220 198 / 9%), transparent 71%);
+    border-radius: 50%;
+    bottom: -22rem;
+    content: '';
+    filter: blur(10px);
+    height: min(50vw, 38rem);
+    position: absolute;
+    right: -15rem;
+    width: min(50vw, 38rem);
+  }
 
   h2 {
     font-size: var(--text-4xl);
@@ -267,6 +322,7 @@ export const FinalCtaInner = styled(Container)`
   align-items: center;
   display: flex;
   flex-direction: column;
+  position: relative;
 `
 
 export const CtaSubtitle = styled.p`
@@ -281,7 +337,7 @@ export const CtaBody = styled.p`
   max-width: 39rem;
 `
 
-export const MobileWhatsapp = styled.a`
+export const MobileWhatsapp = styled.a<{ $isFooterVisible: boolean }>`
   align-items: center;
   background: var(--color-brand);
   border: 1px solid rgb(232 220 198 / 45%);
@@ -297,7 +353,15 @@ export const MobileWhatsapp = styled.a`
   padding: 0.75rem 1rem;
   position: fixed;
   right: 1rem;
+  transform: translateY(${({ $isFooterVisible }) => ($isFooterVisible ? '1.25rem' : '0')});
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease,
+    visibility 220ms ease;
+  visibility: ${({ $isFooterVisible }) => ($isFooterVisible ? 'hidden' : 'visible')};
   z-index: 15;
+  opacity: ${({ $isFooterVisible }) => ($isFooterVisible ? 0 : 1)};
+  pointer-events: ${({ $isFooterVisible }) => ($isFooterVisible ? 'none' : 'auto')};
 
   @media (min-width: 48rem) {
     display: none;
