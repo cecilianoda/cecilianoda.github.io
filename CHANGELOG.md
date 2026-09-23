@@ -18,6 +18,7 @@ Todas as alterações relevantes deste projeto serão documentadas neste arquivo
 
 ### Corrigido
 
+- Adicionado rotas estáticas
 - Adicionado fallback de rotas para que links diretos às seções carreguem o site e exibam a seção correspondente no GitHub Pages.
 - Mantida a compatibilidade com links antigos contendo hash, redirecionando-os para as novas URLs limpas.
 

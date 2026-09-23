@@ -41,6 +41,19 @@ jobs:
         working-directory: source
         run: npm run build
 
+      - name: Create section routes
+        working-directory: source
+        run: |
+          mkdir -p dist/sobre
+          mkdir -p dist/psicanalise
+          mkdir -p dist/atendimento
+          mkdir -p dist/faq
+
+          cp dist/index.html dist/sobre/index.html
+          cp dist/index.html dist/psicanalise/index.html
+          cp dist/index.html dist/atendimento/index.html
+          cp dist/index.html dist/faq/index.html
+
       - name: Check out deployment branch
         uses: actions/checkout@v6
         with:
